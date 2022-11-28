@@ -1,0 +1,44 @@
+grumphp:
+    tasks:
+#        securitychecker_symfony:
+#            lockfile: ./composer.lock
+#            format: ~
+#            run_always: false
+#            metadata:
+#                priority: 2
+        phpcsfixer2:
+            config: .php-cs-fixer.dist.php
+            config_contains_finder: true
+            verbose: true
+            diff: false
+            metadata:
+                priority: 2
+        stylelint:
+            bin: "./node_modules/.bin/stylelint"
+            triggered_by: [ "css", "scss" ]
+            max_warnings: 3
+            config: .stylelintrc.json
+            quiet: false
+            metadata:
+                priority: 2
+        twigcs:
+            path: 'templates'
+            severity: 'warning'
+            display: 'all'
+            ruleset: 'FriendsOfTwig\Twigcs\Ruleset\Official'
+            triggered_by: [ 'twig' ]
+            exclude: [ ]
+            metadata:
+                priority: 2
+        phpunitbridge:
+            metadata:
+                priority: 1                
+    parallel:
+        enabled: true
+        max_workers: 32
+    fixer:
+        enabled: true
+        fix_by_default: true
+    process_timeout: 600
+    extensions:
+        - Space48\GrumPHPStylelintTask\Extension
