@@ -9,9 +9,9 @@ class HomeControllerTest extends WebTestCase
     public function testSomething(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/');
+        $client->request('GET', '/home');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello Chiron !');
+        $this->assertSelectorTextContains('h1', 'Hello Galien !');
     }
 }
