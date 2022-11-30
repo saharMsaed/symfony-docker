@@ -1,4 +1,12 @@
 {
+	local_certs
+}
+
+foo.test {
+    reverse_proxy https://localhost
+}
+
+{
     # Debug
     {$CADDY_DEBUG}
 }

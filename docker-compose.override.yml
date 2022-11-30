@@ -20,9 +20,19 @@ services:
       - host.docker.internal:host-gateway
 
   caddy:
+    environment:
+      CADDY_EXTRA_CONFIG: "tls /etc/caddy/certs/foo.test.pem /etc/caddy/certs/foo.test-key.pem"
     volumes:
+      - ./docker/caddy/certs:/etc/caddy/certs:ro
       - ./public:/srv/app/public:ro
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+        
+#  caddy:
+#    environment:
+#      CADDY_EXTRA_CONFIG: "tls /etc/caddy/certs/tls.pem /etc/caddy/certs/tls.key"
+#  volumes:
+#    - ./docker/caddy/certs:/etc/caddy/certs:ro
+#    - ./public:/srv/app/public:ro
 
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
