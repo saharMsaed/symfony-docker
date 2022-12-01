@@ -1,9 +1,11 @@
 start:
-	#docker compose build --pull --no-cache
+	docker compose build --pull --no-cache
 	docker-compose up
 
 stop:
 	docker compose down --remove-orphans
+
+
 
 deploy:
 	docker rmi -f smsaed/back-app
