@@ -63,7 +63,7 @@ git clone git@github.com:<username>/<project-name>.git
 Go into the directory containing your project (`<project-name>`), and start the app in production mode:
 
 ```console
-SERVER_NAME=your-domain-name.example.com \
+WEBSITE_NAME=your-domain-name.example.com \
 APP_SECRET=ChangeMe \
 CADDY_MERCURE_JWT_SECRET=ChangeThisMercureHubJWTSecretKey \
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
@@ -79,7 +79,7 @@ Go to `https://your-domain-name.example.com` and enjoy!
 Alternatively, if you don't want to expose an HTTPS server but only an HTTP one, run the following command:
 
 ```console
-SERVER_NAME=:80 \
+WEBSITE_NAME=:80 \
 APP_SECRET=ChangeMe \
 CADDY_MERCURE_JWT_SECRET=ChangeThisMercureHubJWTSecretKey \
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d

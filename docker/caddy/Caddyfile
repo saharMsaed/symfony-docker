@@ -7,7 +7,7 @@
     {$CADDY_DEBUG}
 }
 
-backend.foo.bar
+{$WEBSITE_NAME}
 
 log
 

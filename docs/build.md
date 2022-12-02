@@ -19,9 +19,9 @@ For instance, use the following command to use the development branch of Symfony
 
 ## Customizing the Server Name
 
-Use the `SERVER_NAME` environment variable to define your custom server name(s).
+Use the `WEBSITE_NAME` environment variable to define your custom server name(s).
 
-    SERVER_NAME="app.localhost, caddy:80" docker compose up --build
+    WEBSITE_NAME="app.localhost, caddy:80" docker compose up --build
 
 If you use Mercure, keep `caddy:80` in the list to allow the PHP container to request the caddy service.
 
