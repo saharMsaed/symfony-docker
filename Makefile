@@ -6,11 +6,11 @@ stop:
 	docker compose down --remove-orphans
 
 deploy:
-# 	docker rmi -f smsaed/back-app
-# 	docker build -t smsaed/back-app:latest5 .
-# 	docker image push smsaed/back-app:latest5
-# 	docker pull smsaed/back-app:latest5
-	docker run --name back-app -p 443:443 -d smsaed/back-app:latest5
+	docker rmi -f smsaed/back-app
+	docker build -t smsaed/back-app:latest42 .
+	docker image push smsaed/back-app:latest42
+	docker pull smsaed/back-app:latest42
+	docker run --name back-app -p 80:80 -p 443:443 -p 443:443/udp -d smsaed/back-app:latest42
 
 tests: bin-phpunit
 

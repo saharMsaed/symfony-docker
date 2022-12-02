@@ -8,6 +8,7 @@ services:
     volumes:
       - ./:/srv/app
       - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
+#      - ./var/log/php:/var/log
       # If you develop on Mac or Windows you can remove the vendor/ directory
       #  from the bind-mount for better performance by enabling the next line:
       #- /srv/app/vendor
@@ -20,9 +21,13 @@ services:
       - host.docker.internal:host-gateway
 
   caddy:
+    environment:
+      CADDY_EXTRA_CONFIG: "tls /etc/caddy/certs/_wildcard.foo.bar.pem /etc/caddy/certs/_wildcard.foo.bar-key.pem"      
     volumes:
+      - ./docker/caddy/certs:/etc/caddy/certs:ro
       - ./public:/srv/app/public:ro
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+#      - ./var/log/caddy:/var/log/caddy
 
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###

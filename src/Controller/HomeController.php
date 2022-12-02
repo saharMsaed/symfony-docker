@@ -15,4 +15,12 @@ class HomeController extends AbstractController
             '<html><body><h1>Hello Galien !!!</h1></body></html>'
         );
     }
+
+    #[Route('/test')]
+    public function test(): Response
+    {
+        return new Response(
+            '<html><body><h1>Hello u !!!</h1></body></html>'
+        );
+    }
 }

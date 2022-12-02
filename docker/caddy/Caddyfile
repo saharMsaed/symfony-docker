@@ -1,9 +1,13 @@
 {
+  local_certs
+}
+
+{
     # Debug
     {$CADDY_DEBUG}
 }
 
-{$SERVER_NAME}
+backend.foo.bar
 
 log
 
