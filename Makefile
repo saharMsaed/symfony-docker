@@ -1,34 +1,42 @@
-start:
+start-with-build:
 	docker compose build --pull --no-cache
+	docker-compose up
+
+start:
 	docker-compose up
 
 stop:
 	docker compose down --remove-orphans
 
 deploy:
-	docker rmi -f smsaed/back-app
-	docker build \
-	--build-arg APP_ENV=prod \
-	--build-arg HTTP_PORT=80 \
-	--build-arg HTTPS_PORT=443 \
-	--build-arg HTTP3_PORT=443 \
-	--build-arg WEBSITE_NAME=backend.foo.bar \
-	--build-arg CERTS_PATH='./docker/caddy/certs'\
-	--build-arg SSL_CERT='_wildcard.foo.bar.pem' \
-	--build-arg SSL_CERT_KEY='_wildcard.foo.bar-key.pem' \
-	--build-arg DATABASE_USER=chiron_user \
-    --build-arg DATABASE_PASSWORD=If1JSl73p9aT \
-    --build-arg DATABASE_IP=postgres-database-1 \
-    --build-arg DATABASE_PORT=5432 \
-    --build-arg DATABASE_NAME=chiron_local \
-    --build-arg POSTGRES_VERSION=14 \
-	 -t smsaed/back-app:latest46 .
-	docker image push smsaed/back-app:latest46
-	docker pull smsaed/back-app:latest46
-	docker run --name back-app -p 443:443 -d smsaed/back-app:latest46
+	docker container rm -f back-app
+	docker build -t smsaed/back-app:latest .
+	docker run --name back-app -p 443:443 -p 80:80 \
+	-e APP_ENV=prod \
+	-e HTTP_PORT=80 \
+	-e HTTPS_PORT=443 \
+	-e HTTP3_PORT=443 \
+	-e WEBSITE_NAME=galien.back.local \
+	-e CERTS_PATH='./docker/caddy/certs' \
+	-e SSL_CERT='_wildcard.galien.back.local.pem' \
+	-e SSL_CERT_KEY='_wildcard.galien.back.local-key.pem' \
+	-e DATABASE_USER=galien_user \
+    -e DATABASE_PASSWORD=If1JSl73p9aT \
+    -e DATABASE_IP=postgres-database-1 \
+    -e DATABASE_PORT=5432 \
+    -e DATABASE_NAME=galien_local \
+    -e POSTGRES_VERSION=14 \
+    -d smsaed/back-app:latest
+
+## Tests
 
 tests: bin-phpunit
+tests-coverage: coverage
 
 bin-phpunit:
 	@echo "$(STEP) Exécution des tests... $(STEP)"
 	-php -d memory_limit=-1 ./vendor/bin/phpunit --configuration phpunit.xml.dist
+
+coverage:
+	@echo "$(STEP) Exécution des tests avec analyse du coverage... $(STEP)"
+	-XDEBUG_MODE=coverage php -d memory_limit=-1 ./vendor/bin/phpunit --configuration phpunit.xml.dist --log-junit docs/coverage/junit-report.xml --coverage-text --coverage-cobertura=docs/coverage/cobertura.xml --coverage-html docs/coverage --coverage-clover docs/coverage/result.xml

@@ -1,7 +1,13 @@
 version: "3.4"
 
-# Production environment override
 services:
   php:
     environment:
-      APP_SECRET: ${APP_SECRET}      
+      APP_SECRET: ${APP_SECRET}
+      APP_ENV: prod
+      
+  caddy:
+    environment:
+      CADDY_EXTRA_CONFIG: "tls /etc/caddy/certs/${SSL_CERT} /etc/caddy/certs/${SSL_CERT_KEY}"
+    volumes:
+      - ${CERTS_PATH}:/etc/caddy/certs:ro

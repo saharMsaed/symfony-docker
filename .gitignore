@@ -19,6 +19,8 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
+docs/coverage/
+
 /.idea
 
 ###> friendsofphp/php-cs-fixer ###
